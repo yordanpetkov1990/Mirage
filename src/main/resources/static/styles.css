@@ -1,0 +1,177 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('background-img.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+}
+
+
+
+label{
+    color: #f8f9fa;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.header {
+    background-color: #222;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.header a, .footer a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.header a:hover, .footer a:hover {
+    text-decoration: underline;
+}
+
+.header .navbar-brand, .footer .navbar-brand {
+    font-size: 24px;
+}
+
+p {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #f8f9fa;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8f9fa;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    color: white;
+    text-align: center;
+    padding: 0px 0;
+
+}
+
+footer nav a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 5px;
+
+}
+
+footer nav a:hover {
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #222; /* Background color for navbar */
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #f4f4f4;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ff4081;
+}
+
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #222;
+        flex-direction: column;
+    }
+
+    .nav-links li {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 15px;
+    }
+
+
+
+    .nav-active .nav-links {
+        display: flex;
+    }
+
+
+}
+
+a.nav-link {
+    font-size: 20px;
+}
+
+a.navbar-brand {
+    font-size: 35px;
+}
+html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}

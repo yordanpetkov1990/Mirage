@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FAQ - Nightclub</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<th:insert fragment="header :: header"/>
+<div class="container mt-5">
+    <h2 class="text-center">Frequently Asked Questions</h2>
+    <div class="accordion" id="faqAccordion">
+        <div class="card" th:each="faq : ${faqs}">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" th:attr="aria-controls='collapse' + ${faq.id}" th:attr="data-target='#collapse' + ${faq.id}" aria-expanded="true">
+                        <span th:text="${faq.question}">FAQ Question</span>
+                    </button>
+                </h2>
+            </div>
+            <div th:attr="id='collapse' + ${faq.id}" class="collapse" th:attr="aria-labelledby='heading' + ${faq.id}" data-parent="#faqAccordion">
+                <div class="card-body" th:text="${faq.answer}">
+                    FAQ Answer
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:insert fragment="footer :: footer"/>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
