@@ -2,7 +2,9 @@ package nightclub.web.nightclub.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +28,16 @@ public class User {
     private String phoneNumber;
     @OneToMany(mappedBy = "owner")
     private Set<Reservation> reservations;
+
+    @ManyToMany(
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<UserRoleEntity> roles = new ArrayList<>();
 
     public User() {
         reservations = new HashSet<>();
@@ -89,6 +101,14 @@ public class User {
 
     public Set<Reservation> getReservations() {
         return reservations;
+    }
+
+    public List<UserRoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
     }
 
     public void setReservations(Set<Reservation> reservations) {

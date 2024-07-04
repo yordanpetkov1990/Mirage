@@ -6,26 +6,62 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<th:insert fragment="header :: header"/>
 <div class="container mt-5">
     <h2 class="text-center">Register</h2>
-    <form th:action="@{/register}" method="post">
+    <form
+            th:action="@{/register}"
+            th:method="post"
+            th:object="${registrationDTO}"
+    >
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <label th:for="username">Username:</label>
+            <input th:field="*{username}"
+                   th:errorclass="'is-invalid bg-danger'"
+                    type="text" class="form-control" id="username" name="username" required>
+            <small th:each="error: ${#fields.errors('username')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">Username error message</small>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <label th:for="email">Email:</label>
+            <input th:field="*{email}"
+                   th:errorclass="'is-invalid bg-danger'" type="email" class="form-control" id="email" name="email" required>
+            <small th:each="error: ${#fields.errors('email')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">email error message</small>
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <label th:for="password">Password:</label>
+            <input th:field="*{password}"
+                   th:errorclass="'is-invalid bg-danger'" type="password" class="form-control" id="password" name="password" required>
+            <small th:each="error: ${#fields.errors('password')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">password error message</small>
+        </div>
+        <div class="form-group">
+            <label th:for="firstName">firstName:</label>
+            <input th:field="*{firstName}" type="text" class="form-control" id="firstName" name="firstName">
+        </div>
+        <div class="form-group">
+            <label th:for="lastName">lastName:</label>
+            <input th:field="*{lastName}" type="text" class="form-control" id="lastName" name="lastName">
+        </div>
+        <div class="form-group">
+            <label th:for="phoneNumber">phoneNumber:</label>
+            <input th:field="*{phoneNumber}"
+                   th:errorclass="'is-invalid bg-danger'" type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+            <small th:each="error: ${#fields.errors('phoneNumber')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">phoneNumber error message</small>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
 </div>
-<th:insert fragment="footer :: footer"/>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

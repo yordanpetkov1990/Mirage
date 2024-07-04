@@ -3,6 +3,8 @@ package nightclub.web.nightclub.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "reservations")
@@ -20,12 +22,11 @@ public class Reservation {
     private StatusEnum status;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-
-    @OneToOne()
-    private TableEntity table;
+    @OneToMany()
+    private Set<TableEntity> tables;
 
     public Reservation() {
+        tables = new HashSet<>();
     }
 
     public Long getId() {
@@ -76,11 +77,11 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
-    public TableEntity getTable() {
-        return table;
+    public Set<TableEntity> getTables() {
+        return tables;
     }
 
-    public void setTable(TableEntity table) {
-        this.table = table;
+    public void setTables(Set<TableEntity> tables) {
+        this.tables = tables;
     }
 }
