@@ -3,7 +3,7 @@
 <head>
     <title>Events - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <th:insert fragment="header :: header"/>
@@ -14,8 +14,11 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${event.name}">Event Name</h5>
-                    <p class="card-text" th:text="${event.date}">Event Date</p>
-                    <p class="card-text" th:text="${event.description}">Event Description</p>
+                    <p class="card-text" style="color: cornsilk" th:text="'Date: ' + ${event.eventDate}">Event Date</p>
+                    <p style="font-size: 20px;margin-bottom: 0" >Singers: </p>
+                    <div th:each="singer : ${event.singers}">
+                        <p class="card-text singer" style="text-align: center;font-size: 25px;color: wheat;" th:text="${singer}">Event Singer</p>
+                    </div>
                     <a th:href="@{/event/{id}(id=${event.id})}" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
