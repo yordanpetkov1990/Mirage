@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<th:insert fragment="header :: header"/>
+<div th:replace="fragments/header">...</div>
 <div class="container mt-5">
     <div class="card">
         <div class="card-body text-center">
@@ -18,18 +18,19 @@
             <p class="card-text" th:text="'Entry Fee: $' + ${event.entryFee}">Entry Fee</p>
             <p class="card-text" th:text="'Capacity: ' + ${event.capacity}">Capacity</p>
             <p class="singers-header">Singers:</p>
-            <div th:each="singer : ${event.singers}">
+            <div th:each="singer : ${event.singers}" class="text-center mb-4">
                 <img th:src="${singer.imageUrl}" alt="Singer Image" class="img-thumbnail singer-img" style="max-width: 200px;">
-
-                <p class="card-text singer" th:text="${singer.name}">Event Singer</p>
+                <p class="card-text singer mt-2" th:text="${singer.name}">Singer Name</p>
             </div>
+<!--        th:href="@{/order/details(id=${order.id})}"-->
+<!--            <a th:href="@{/reservations(status='canceled')}" class="btn btn-outline-primary" th:classappend="${status == 'canceled'} ? 'active' : ''">Canceled</a>-->
+            <a th:href="@{/booking/(event_id=${event.id})}" class="btn btn-success mt-4">Make a Reservation</a>
         </div>
     </div>
 </div>
-<th:insert fragment="footer :: footer"/>
+<footer th:insert="fragments/footer" ></footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

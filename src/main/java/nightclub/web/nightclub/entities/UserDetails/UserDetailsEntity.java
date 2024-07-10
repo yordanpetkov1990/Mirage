@@ -9,16 +9,20 @@ public class UserDetailsEntity extends User {
     private final String firstName;
     private final String lastName;
 
+    private final Long id;
+
     public UserDetailsEntity(
             String username,
             String password,
             Collection<? extends GrantedAuthority> authorities,
             String firstName,
-            String lastName
+            String lastName,
+            Long id
     ) {
         super(username, password, authorities);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -42,5 +46,9 @@ public class UserDetailsEntity extends User {
         }
 
         return fullName.toString();
+    }
+
+    public Long getId() {
+        return id;
     }
 }

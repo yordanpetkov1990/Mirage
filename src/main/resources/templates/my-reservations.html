@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Reservations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .table-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .table thead th {
+            color: #fff;
+        }
+        .table tbody tr {
+            color: #fff;
+        }
+        .table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .btn-filter {
+            margin: 5px;
+        }
+        .btn-active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        h2.text-center {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header">...</div>
+
+<div class="container mt-5">
+    <h2 class="text-center">My Reservations</h2>
+    <div class="text-center mb-4">
+        <a th:href="@{/reservations}" class="btn btn-outline-primary" th:classappend="${status == null} ? 'active' : ''">All</a>
+        <a th:href="@{/reservations(status='pending')}" class="btn btn-outline-primary" th:classappend="${status == 'pending'} ? 'active' : ''">Pending</a>
+        <a th:href="@{/reservations(status='confirmed')}" class="btn btn-outline-primary" th:classappend="${status == 'confirmed'} ? 'active' : ''">Confirmed</a>
+        <a th:href="@{/reservations(status='canceled')}" class="btn btn-outline-primary" th:classappend="${status == 'canceled'} ? 'active' : ''">Canceled</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Number of Guests</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.eventName}">Event Name</td>
+            <td th:text="${reservation.date}">Event Date</td>
+            <td th:text="${reservation.numberOfGuests}">Number of Guests</td>
+            <td th:text="${reservation.status}">Status</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/footer">...</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

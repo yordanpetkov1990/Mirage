@@ -35,7 +35,8 @@ public class UserEntityDetailsService implements UserDetailsService {
                 user.getPassword(),
                 user.getRoles().stream().map(UserRoleEntity::getRole).map(this::mapToRole).toList(),
                 user.getFirstName(),
-                user.getLastName()
+                user.getLastName(),
+                user.getId()
         );
     }
 

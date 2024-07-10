@@ -59,6 +59,12 @@ public class EventServiceImpl implements EventService {
     public EventDetailsDTO findEventById(Long id) {
      return this.eventRepository.findById(id).map(this::mapToDetails).get();
     }
+
+    @Override
+    public Event getEventById(Long eventId) {
+        return this.eventRepository.findById(eventId).get();
+    }
+
     @Transactional
     protected EventDetailsDTO mapToDetails(Event event) {
         EventDetailsDTO map = modelMapper.map(event, EventDetailsDTO.class);
