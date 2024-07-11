@@ -5,6 +5,9 @@ public class ReservationDTO {
     public int guests;
     private Long eventId;
 
+    private String eventName;
+
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -29,6 +32,15 @@ public class ReservationDTO {
 
     public ReservationDTO setEventId(Long eventId) {
         this.eventId = eventId;
+        return this;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public ReservationDTO setEventName(String eventName) {
+        this.eventName = eventName;
         return this;
     }
 }

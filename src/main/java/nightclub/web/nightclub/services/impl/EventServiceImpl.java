@@ -13,8 +13,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,13 +54,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventDetailsDTO findEventById(Long id) {
-     return this.eventRepository.findById(id).map(this::mapToDetails).get();
+    public Optional<EventDetailsDTO> findEventById(Long id) {
+     return this.eventRepository.findById(id).map(this::mapToDetails);
     }
 
     @Override
-    public Event getEventById(Long eventId) {
-        return this.eventRepository.findById(eventId).get();
+    public Optional<Event> getEventById(Long eventId) {
+        return this.eventRepository.findById(eventId);
     }
 
     @Transactional

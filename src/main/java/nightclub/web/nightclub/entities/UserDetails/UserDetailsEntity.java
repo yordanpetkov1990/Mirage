@@ -11,18 +11,25 @@ public class UserDetailsEntity extends User {
 
     private final Long id;
 
+    private final String phoneNumber;
+
     public UserDetailsEntity(
             String username,
             String password,
             Collection<? extends GrantedAuthority> authorities,
             String firstName,
             String lastName,
-            Long id
+            Long id, String phoneNumber
     ) {
         super(username, password, authorities);
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getFirstName() {

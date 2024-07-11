@@ -10,7 +10,11 @@
 
 <div class="container mt-5">
     <h2 class="text-center">Make a Reservation</h2>
-    <form th:action="@{/booking}" th:method="post" th:object="${ReservationDTO}">
+    <form th:action="@{'/booking?event_id=' + ${ReservationDTO.eventId}}" th:method="post" th:object="${ReservationDTO}">
+        <div class="form-group">
+            <label for="eventDetailsDTO">Event:</label>
+            <input type="text" class="form-control" th:field="*{eventName}" id="eventDetailsDTO" name="eventDetailsDTO" readonly>
+        </div>
         <div class="form-group">
             <label for="phoneNumber">Phone:</label>
             <input type="tel" class="form-control" th:field="*{phoneNumber}" id="phoneNumber" name="phoneNumber" required>
@@ -19,15 +23,9 @@
             <label for="guests">Number of Guests:</label>
             <input type="number" class="form-control" th:field="*{guests}" id="guests" name="guests" required>
         </div>
-        <div class="form-group" th:if="${alreadySelected}">
-            <label for="event">Select Event:</label>
-            <select class="form-control" th:field="*{eventId}"  id="event" name="eventId" required>
 
-                <option th:each="event : ${events}" th:value="${event.id}"
-                        th:text="${event.name} + ' - ' + ${event.eventDate}">
-                </option>
-            </select>
-        </div>
+        <input type="hidden" th:field="*{eventId}" id="eventId" name="eventId">
+
         <button type="submit" class="btn btn-primary btn-block">Book Now</button>
     </form>
 </div>
@@ -35,6 +33,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>
 

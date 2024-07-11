@@ -68,7 +68,7 @@ public class EventController {
 
     @GetMapping("/event/{id}")
     public String getEventDetails(@PathVariable Long id, Model model) {
-        EventDetailsDTO event = eventService.findEventById(id);
+        EventDetailsDTO event = eventService.findEventById(id).get();
         model.addAttribute("event", event);
         return "event-details";
     }

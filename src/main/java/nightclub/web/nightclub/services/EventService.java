@@ -5,6 +5,7 @@ import nightclub.web.nightclub.entities.dtos.AddEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface EventService {
@@ -14,7 +15,7 @@ public interface EventService {
 
     Set<EventDTO> getAllEvents();
 
-    EventDetailsDTO findEventById(Long id);
+    Optional<EventDetailsDTO> findEventById(Long id);
 
-    Event getEventById(Long eventId);
+    Optional<Event> getEventById(Long eventId);
 }

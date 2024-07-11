@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
     public void makeReservation(ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetailsEntity userDetailsEntity) {
         Reservation reservation = new Reservation();
         reservation.setCreatedAt(LocalDateTime.now());
-        reservation.setEvent(eventService.getEventById(reservationDTO.getEventId()));
+        reservation.setEvent(eventService.getEventById(reservationDTO.getEventId()).get());
         reservation.setStatus(StatusEnum.PENDING);
         reservation.setNumberOfPeople(reservationDTO.getGuests());
         reservation.setOwner(userService.findById(userDetailsEntity.getId()));

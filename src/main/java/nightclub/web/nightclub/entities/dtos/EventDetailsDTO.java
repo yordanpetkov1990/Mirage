@@ -114,4 +114,12 @@ public class EventDetailsDTO {
         this.singers = singers;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return  name + " - "+ date;
+
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package nightclub.web.nightclub.controller;
 
 import jakarta.validation.Valid;
+import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.UserDetails.UserDetailsEntity;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
+import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 import nightclub.web.nightclub.entities.dtos.ReservationDTO;
 import nightclub.web.nightclub.services.EventService;
 import nightclub.web.nightclub.services.ReservationService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -31,25 +34,19 @@ public class ReservationController {
 
     @ModelAttribute("ReservationDTO")
     public ReservationDTO reservationDTO(
-            @AuthenticationPrincipal UserDetailsEntity currentUser,
-            @RequestParam(value = "event_id", required = false) Long eventId,
-            Model model
+            @AuthenticationPrincipal UserDetailsEntity userDetailsEntity,
+            @RequestParam(value = "event_id",required = false) Long eventId
     ){
-        if(eventId == null){
-            model.addAttribute("alreadySelected",true);
-        }
-        return new ReservationDTO().setPhoneNumber(currentUser.getFirstName()).setEventId(eventId);
-    }
 
-    @ModelAttribute("events")
-    public Set<EventDTO> reservationDTO(){
-        return eventService.getAllEvents();
+
+        return new ReservationDTO().setPhoneNumber(userDetailsEntity.getPhoneNumber()).setEventId(eventId)
+               .setEventName(this.eventService.getEventById(eventId).get().getName());
     }
 
 
     @GetMapping("/booking/")
     public String makeReservation() {
-//        model.addAttribute("selectedEventId", eventId);
+
         return "booking";
     }
 
