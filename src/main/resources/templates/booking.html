@@ -13,7 +13,7 @@
     <form th:action="@{'/booking?event_id=' + ${ReservationDTO.eventId}}" th:method="post" th:object="${ReservationDTO}">
         <div class="form-group">
             <label for="eventDetailsDTO">Event:</label>
-            <input type="text" class="form-control" th:field="*{eventName}" id="eventDetailsDTO" name="eventDetailsDTO" readonly>
+            <input type="text" class="form-control" th:field="*{eventDetailsDTO}" id="eventDetailsDTO" name="eventDetailsDTO" readonly>
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone:</label>

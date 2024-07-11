@@ -35,12 +35,13 @@ public class ReservationController {
     @ModelAttribute("ReservationDTO")
     public ReservationDTO reservationDTO(
             @AuthenticationPrincipal UserDetailsEntity userDetailsEntity,
-            @RequestParam(value = "event_id",required = false) Long eventId
+            @RequestParam(value = "event_id") Long eventId
     ){
 
-
-        return new ReservationDTO().setPhoneNumber(userDetailsEntity.getPhoneNumber()).setEventId(eventId)
-               .setEventName(this.eventService.getEventById(eventId).get().getName());
+        EventDetailsDTO eventDetailsDTO = this.eventService.findEventById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
+        return new ReservationDTO().setPhoneNumber(userDetailsEntity.getPhoneNumber())
+                .setEventDetailsDTO(eventDetailsDTO)
+                .setEventId(eventId);
     }
 
 
