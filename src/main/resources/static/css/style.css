@@ -225,4 +225,30 @@ h2 {
     height: 200px;
     object-fit: cover;
 }
+.category-food {
+    background: url('../images/food.jpeg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.category-drink {
+    background: url('../images/drink.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.list-group-item-action:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease-in-out;
+}
 

@@ -1,6 +1,7 @@
 package nightclub.web.nightclub.controller;
 
 import jakarta.validation.Valid;
+import nightclub.web.nightclub.entities.MenuItem;
 import nightclub.web.nightclub.entities.MenuItemCategory;
 import nightclub.web.nightclub.entities.dtos.AddMenuItemDTO;
 import nightclub.web.nightclub.services.MenuItemService;
@@ -10,7 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class MenuItemController {
@@ -51,5 +55,21 @@ public class MenuItemController {
         menuItemService.createMenuItem(addMenuItemDTO);
 
         return "redirect:/";
+    }
+
+
+
+    @GetMapping("menu")
+    public String showMenu(){
+
+        return "menu-categories";
+    }
+
+    @GetMapping("menu-items")
+    public String showMenuItems(@RequestParam(value = "category") String category,Model model){
+        List<MenuItem> allMenuItemsByCategory = menuItemService.getAllMenuItemsByCategory(category);
+        model.addAttribute("category",category);
+        model.addAttribute("menuItems",allMenuItemsByCategory);
+        return "menu-items";
     }
 }
