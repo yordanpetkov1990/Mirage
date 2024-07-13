@@ -28,7 +28,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @ModelAttribute("eventDTO")
+    @ModelAttribute("addEventDTO")
     public AddEventDTO eventDTO(){
         return new AddEventDTO();
     }
