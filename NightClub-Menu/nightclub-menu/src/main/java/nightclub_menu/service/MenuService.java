@@ -14,4 +14,6 @@ public interface MenuService {
     List<MenuItemDTO> getAllMenuItems();
 
     void deleteMenuItem(Long id);
+
+    List<MenuItemDTO> getAllMenuItemsByCategory(String category);
 }

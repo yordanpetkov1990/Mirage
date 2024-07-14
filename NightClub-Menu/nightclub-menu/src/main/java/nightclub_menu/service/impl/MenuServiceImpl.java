@@ -3,6 +3,7 @@ package nightclub_menu.service.impl;
 import nightclub_menu.model.MenuItem;
 import nightclub_menu.model.dto.AddMenuItemDTO;
 import nightclub_menu.model.dto.MenuItemDTO;
+import nightclub_menu.model.enums.MenuItemCategory;
 import nightclub_menu.repository.MenuItemRepository;
 import nightclub_menu.service.MenuService;
 import org.hibernate.ObjectNotFoundException;
@@ -45,6 +46,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void deleteMenuItem(Long id) {
         this.menuItemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MenuItemDTO> getAllMenuItemsByCategory(String category) {
+        return this.menuItemRepository.findAllByCategory(MenuItemCategory.valueOf(category.toUpperCase()))
+                .stream().map(MenuServiceImpl::map)
+                .collect(Collectors.toList());
     }
 
     private static MenuItemDTO map(MenuItem menuItem) {

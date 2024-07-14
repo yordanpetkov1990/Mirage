@@ -39,6 +39,12 @@ public class MenuController {
                 menuService.getAllMenuItems()
         );
     }
+    @GetMapping("/by-category/{category}")
+    public ResponseEntity<List<MenuItemDTO>> getAllByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(
+                menuService.getAllMenuItemsByCategory(category)
+        );
+    }
 
     @PostMapping
     public ResponseEntity<MenuItemDTO> createMenuItem(
