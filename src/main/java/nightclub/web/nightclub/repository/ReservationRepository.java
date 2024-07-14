@@ -8,10 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     List<Reservation> findByOwnerIdAndStatus(Long owner_id, StatusEnum status);
 
     List<Reservation> findByOwnerId(Long id);
+
+    Optional<Reservation> findFirstByStatusOrderByCreatedAt(StatusEnum status);
 }
