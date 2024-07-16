@@ -1,5 +1,6 @@
 package nightclub.web.nightclub.services;
 
+import nightclub.web.nightclub.entities.Reservation;
 import nightclub.web.nightclub.entities.TableEntity;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface TableService {
 
     Optional<TableEntity> findById(Long tableId);
 
-    List<TableEntity> findAllFreeTables();
+    List<TableEntity> findAllFreeTables(Reservation reservation);
 }

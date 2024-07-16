@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -104,5 +105,12 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservation.setTables(tables);
         this.reservationRepository.saveAndFlush(reservation);
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public void removeAllOlderThanNow() {
+        this.reservationRepository.deleteAllByEvent_DateLessThan(LocalDate.now());
     }
 }

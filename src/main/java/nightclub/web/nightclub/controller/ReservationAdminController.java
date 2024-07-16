@@ -32,11 +32,16 @@ public class ReservationAdminController {
     @GetMapping
     public String showReservations(Model model) {
         Optional<Reservation> firstCreatedPendingReservation = reservationService.findFirstCreatedPendingReservation();
-        List<TableEntity> tables = tableService.findAllFreeTables();
-        if(firstCreatedPendingReservation.isPresent() && !tables.isEmpty()){
-            model.addAttribute("reservation", firstCreatedPendingReservation.get());
-            model.addAttribute("tables", tables);
-            model.addAttribute("statuses", StatusEnum.values());
+
+        if(firstCreatedPendingReservation.isPresent()){
+            List<TableEntity> tables = tableService.findAllFreeTables(firstCreatedPendingReservation.get());
+            if(!tables.isEmpty()){
+                model.addAttribute("reservation", firstCreatedPendingReservation.get());
+                model.addAttribute("tables", tables);
+                model.addAttribute("statuses", StatusEnum.values());
+            }else{
+                model.addAttribute("noAvailableTables", true);
+            }
         }else{
             model.addAttribute("noNewReservations", true);
         }

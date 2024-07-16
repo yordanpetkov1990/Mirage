@@ -1,5 +1,6 @@
 package nightclub.web.nightclub.services.impl;
 
+import nightclub.web.nightclub.entities.Reservation;
 import nightclub.web.nightclub.entities.TableEntity;
 import nightclub.web.nightclub.repository.TableRepository;
 import nightclub.web.nightclub.services.TableService;
@@ -28,7 +29,7 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public List<TableEntity> findAllFreeTables() {
-        return tableRepository.findAllByisAvailableIsTrue();
+    public List<TableEntity> findAllFreeTables(Reservation reservation) {
+        return tableRepository.findAvailableTablesForEvent(reservation.getEvent().getId());
     }
 }

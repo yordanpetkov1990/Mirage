@@ -2,6 +2,8 @@ package nightclub.web.nightclub.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "tables")
 public class TableEntity {
@@ -14,6 +16,8 @@ public class TableEntity {
     private Integer capacity;
     @Column(name = "is_available",nullable = false)
     private boolean isAvailable;
+    @ManyToMany(mappedBy = "tables")
+    private Set<Reservation> reservations;
 
     public TableEntity() {
     }
@@ -48,5 +52,14 @@ public class TableEntity {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public TableEntity setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+        return this;
     }
 }

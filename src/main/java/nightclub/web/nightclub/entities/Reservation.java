@@ -22,7 +22,10 @@ public class Reservation {
     private StatusEnum status;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "reservations_tables",
+    joinColumns = @JoinColumn(name = "reservation_id"),
+    inverseJoinColumns = @JoinColumn(name = "table_id"))
     private Set<TableEntity> tables;
 
     public Reservation() {

@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div class="container mt-5" th:unless="${noNewReservations}">
+<div class="container mt-5" th:unless="${noNewReservations} OR ${noAvailableTables}">
     <h2 class="text-center">Edit Reservation</h2>
     <form th:action="@{/admin/reservations/update}" th:method="post" >
         <div class="form-group">
@@ -45,6 +45,10 @@
 <div class="container mt-5" th:if="${noNewReservations}">
     <h2 class="text-center">No New Reservations</h2>
     <p class="text-center">There are currently no new reservations to edit.</p>
+</div>
+<div class="container mt-5" th:if="${noAvailableTables}">
+    <h2 class="text-center">No Available Tables</h2>
+    <p class="text-center">There are currently not any available tables</p>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
