@@ -8,12 +8,12 @@
 <body>
 <div th:replace="fragments/header">...</div>
 <div class="container mt-5">
-    <h1 class="text-center">Welcome to Our Nightclub</h1>
-    <p class="text-center">Experience the best nightlife in town. Join us for unforgettable nights filled with great music, drinks, and atmosphere.</p>
+    <h1 class="text-center" th:text="#{index_page_title}">Welcome to Our Nightclub</h1>
+    <p class="text-center" th:text="#{index_page_desc}">Experience the best nightlife in town. Join us for unforgettable nights filled with great music, drinks, and atmosphere.</p>
     <div class="text-center mt-4">
-        <a href="/events" class="btn btn-primary btn-lg">View Events</a>
-        <a href="/login" class="btn btn-secondary btn-lg">Login</a>
-        <a href="/register" class="btn btn-secondary btn-lg">Register</a>
+        <a href="/events" th:text="#{index_event_button}" class="btn btn-primary btn-lg">View Events</a>
+        <a href="/login" th:text="#{nav_bar_login}" class="btn btn-secondary btn-lg">Login</a>
+        <a href="/register"  th:text="#{nav_bar_login_register}" class="btn btn-secondary btn-lg">Register</a>
     </div>
 </div>
 <footer th:insert="fragments/footer" ></footer>
