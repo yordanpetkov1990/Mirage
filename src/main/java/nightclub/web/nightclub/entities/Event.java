@@ -44,71 +44,80 @@ public class Event {
         return id;
     }
 
-    public void setId(Long id) {
+    public Event setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Event setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Event setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public Event setDate(LocalDate date) {
         this.date = date;
+        return this;
     }
 
     public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public Event setStartTime(LocalTime startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public Event setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+        return this;
     }
 
     public BigDecimal getEntryFee() {
         return entryFee;
     }
 
-    public void setEntryFee(BigDecimal entryFee) {
+    public Event setEntryFee(BigDecimal entryFee) {
         this.entryFee = entryFee;
+        return this;
     }
 
     public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    public Event setCapacity(Integer capacity) {
         this.capacity = capacity;
+        return this;
     }
 
     public Set<Singer> getSingers() {
         return singers;
     }
 
-    public void setSingers(Set<Singer> singers) {
+    public Event setSingers(Set<Singer> singers) {
         this.singers = singers;
+        return this;
     }
 }
