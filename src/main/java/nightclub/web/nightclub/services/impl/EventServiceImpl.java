@@ -54,6 +54,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
+    public Set<EventDetailsDTO> getAllDetailedEvents() {
+        return this.eventRepository.findAll().stream().map(this::mapToDetails).collect(Collectors.toSet());
+    }
+
+    @Override
+    @Transactional
     public Optional<EventDetailsDTO> findEventById(Long id) {
      return this.eventRepository.findById(id).map(this::mapToDetails);
     }

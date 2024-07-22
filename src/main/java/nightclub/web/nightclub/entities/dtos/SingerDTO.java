@@ -3,6 +3,8 @@ package nightclub.web.nightclub.entities.dtos;
 import jakarta.persistence.Column;
 
 public class SingerDTO {
+
+    private Long id;
     private String name;
 
     private String imageUrl;
@@ -10,6 +12,15 @@ public class SingerDTO {
 
     public SingerDTO(){
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public SingerDTO setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {

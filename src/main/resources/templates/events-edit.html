@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Event</title>
+</head>
+<body>
+<h1>Edit Event</h1>
+<form th:action="@{/admin/events/edit/{id}(id=${event.id})}" th:object="${event}" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}">
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}">
+    </div>
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" th:field="*{date}">
+    </div>
+    <div>
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" th:field="*{startTime}">
+    </div>
+    <div>
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" th:field="*{endTime}">
+    </div>
+    <div>
+        <label for="entryFee">Entry Fee:</label>
+        <input type="number" step="0.01" id="entryFee" th:field="*{entryFee}">
+    </div>
+    <div>
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" th:field="*{capacity}">
+    </div>
+    <div>
+        <label for="singers">Singers</label>
+        <select id="singers" name="singers" class="form-control" multiple th:field="*{singers}">
+            <option th:each="singer : ${event.singers}" th:value="${singer}" th:text="${singer.name}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+</body>
+</html>

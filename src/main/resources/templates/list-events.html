@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Events</title>
+</head>
+<body>
+<h1>Events</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Entry Fee</th>
+        <th>Capacity</th>
+        <th>Singers</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.id}">1</td>
+        <td th:text="${event.name}">Event Name</td>
+        <td th:text="${event.description}">Event Description</td>
+        <td th:text="${event.date}">Event Date</td>
+        <td th:text="${event.startTime}">Start Time</td>
+        <td th:text="${event.endTime}">End Time</td>
+        <td th:text="${event.entryFee}">Entry Fee</td>
+        <td th:text="${event.capacity}">Capacity</td>
+        <td th:each="singer : ${event.singers}">
+            <a  th:href="@{/singers/{id}(id=${singer.id})}" th:value="${singer.name}" th:text="${singer.name}">Singer</a>
+        </td>
+        <td>
+            <a th:href="@{/admin/events/edit/{id}(id=${event.id})}">Edit</a>
+            <a th:href="@{/admin/events/delete/{id}(id=${event.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

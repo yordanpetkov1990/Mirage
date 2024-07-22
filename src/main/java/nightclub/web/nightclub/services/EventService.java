@@ -15,6 +15,8 @@ public interface EventService {
 
     Set<EventDTO> getAllEvents();
 
+    Set<EventDetailsDTO> getAllDetailedEvents();
+
     Optional<EventDetailsDTO> findEventById(Long id);
 
     Optional<Event> getEventById(Long eventId);
