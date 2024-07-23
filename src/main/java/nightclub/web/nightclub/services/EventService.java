@@ -20,4 +20,8 @@ public interface EventService {
     Optional<EventDetailsDTO> findEventById(Long id);
 
     Optional<Event> getEventById(Long eventId);
+
+    void save(EventDetailsDTO eventDTO);
+
+    void deleteById(Long id);
 }

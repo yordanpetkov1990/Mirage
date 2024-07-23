@@ -10,6 +10,7 @@ import nightclub.web.nightclub.repository.EventRepository;
 import nightclub.web.nightclub.services.EventService;
 import nightclub.web.nightclub.services.SingerService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,19 @@ public class EventServiceImpl implements EventService {
         return this.eventRepository.findById(eventId);
     }
 
+    @Override
+    @Transactional
+    public void save(EventDetailsDTO eventDTO) {
+        this.eventRepository.saveAndFlush(mapToEvent(eventDTO));
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public void deleteById(Long id) {
+        this.eventRepository.deleteById(id);
+    }
+
     @Transactional
     protected EventDetailsDTO mapToDetails(Event event) {
         EventDetailsDTO map = modelMapper.map(event, EventDetailsDTO.class);
@@ -80,6 +94,13 @@ public class EventServiceImpl implements EventService {
     protected EventDTO map(Event event) {
         EventDTO map = modelMapper.map(event, EventDTO.class);
         map.setSingers(event.getSingers().stream().map(Singer::getName).collect(Collectors.toList()));
+        return map;
+    }
+
+    @Transactional
+    protected Event mapToEvent(EventDetailsDTO eventDTO) {
+        Event map = modelMapper.map(eventDTO, Event.class);
+        map.setSingers(eventDTO.getSingersName().stream().map(s -> this.singerService.getSingerByName(s).get()).collect(Collectors.toSet()));
         return map;
     }
 }

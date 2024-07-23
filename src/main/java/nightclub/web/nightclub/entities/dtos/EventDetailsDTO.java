@@ -29,9 +29,20 @@ public class EventDetailsDTO {
     private BigDecimal entryFee;
     private Integer capacity;
     private Set<SingerDTO> singers;
+    private Set<String> singersName;
 
     public EventDetailsDTO(){
         this.singers = new HashSet<>();
+        this.singersName = new HashSet<>();
+    }
+
+    public Set<String> getSingersName() {
+        return singersName;
+    }
+
+    public EventDetailsDTO setSingersName(Set<String> singersName) {
+        this.singersName = singersName;
+        return this;
     }
 
     public Long getId() {
