@@ -24,4 +24,6 @@ public interface EventService {
     void save(EventDetailsDTO eventDTO);
 
     void deleteById(Long id);
+
+    void removeAllOlderThan2Months();
 }

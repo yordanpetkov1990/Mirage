@@ -4,6 +4,13 @@
     <title>Event Details - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .event-images .img-thumbnail {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header">...</div>
@@ -19,9 +26,17 @@
             <p class="card-text" th:text="'Capacity: ' + ${event.capacity}">Capacity</p>
             <p class="singers-header">Singers:</p>
             <div th:each="singer : ${event.singers}" class="text-center mb-4">
-                <img th:src="${singer.imageUrl}" alt="Singer Image" class="img-thumbnail singer-img" style="max-width: 200px;">
+<!--                <img th:src="${singer.imageUrl}" alt="Singer Image" class="img-thumbnail singer-img" style="max-width: 200px;">-->
                 <p class="card-text singer mt-2" th:text="${singer.name}">Singer Name</p>
             </div>
+            <th:block th:unless="${event.imageUrls.isEmpty()}">
+            <p class="event-images-header">Event Images:</p>
+            <div class="row event-images">
+                <div th:each="imageUrl : ${event.imageUrls}" class="col-md-3 mb-4">
+                    <img th:src="${imageUrl}" alt="Event Image" class="img-thumbnail singer-img" style="max-width: 200px;"  >
+                </div>
+            </div>
+            </th:block>
 <!--        th:href="@{/order/details(id=${order.id})}"-->
 <!--            <a th:href="@{/reservations(status='canceled')}" class="btn btn-outline-primary" th:classappend="${status == 'canceled'} ? 'active' : ''">Canceled</a>-->
             <a th:href="@{/booking/(event_id=${event.id})}" class="btn btn-success mt-4">Make a Reservation</a>

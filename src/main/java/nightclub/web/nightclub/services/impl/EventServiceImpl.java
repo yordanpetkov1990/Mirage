@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,6 +82,13 @@ public class EventServiceImpl implements EventService {
     @Modifying
     public void deleteById(Long id) {
         this.eventRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public void removeAllOlderThan2Months() {
+        this.eventRepository.deleteAllByDateLessThan(LocalDate.now().minusMonths(2));
     }
 
     @Transactional

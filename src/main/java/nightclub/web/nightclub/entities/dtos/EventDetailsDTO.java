@@ -9,7 +9,9 @@ import nightclub.web.nightclub.entities.Singer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EventDetailsDTO {
@@ -31,9 +33,21 @@ public class EventDetailsDTO {
     private Set<SingerDTO> singers;
     private Set<String> singersName;
 
+    private List<String> imageUrls;
+
     public EventDetailsDTO(){
         this.singers = new HashSet<>();
         this.singersName = new HashSet<>();
+        this.imageUrls = List.of("/images/tanya-boeva.jpg");
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public EventDetailsDTO setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+        return this;
     }
 
     public Set<String> getSingersName() {
