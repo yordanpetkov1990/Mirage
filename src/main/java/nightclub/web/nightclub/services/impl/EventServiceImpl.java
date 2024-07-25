@@ -1,6 +1,7 @@
 package nightclub.web.nightclub.services.impl;
 
 import nightclub.web.nightclub.entities.Event;
+import nightclub.web.nightclub.entities.Image;
 import nightclub.web.nightclub.entities.Singer;
 import nightclub.web.nightclub.entities.dtos.AddEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
@@ -95,6 +96,7 @@ public class EventServiceImpl implements EventService {
     protected EventDetailsDTO mapToDetails(Event event) {
         EventDetailsDTO map = modelMapper.map(event, EventDetailsDTO.class);
         map.setSingers(event.getSingers().stream().map(s -> modelMapper.map(s, SingerDTO.class)).collect(Collectors.toSet()));
+        map.setImageUrls(event.getImages().stream().map(Image::getPathUrl).collect(Collectors.toList()));
         return map;
     }
 

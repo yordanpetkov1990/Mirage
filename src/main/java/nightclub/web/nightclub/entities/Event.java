@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,8 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "singer_id")
     )
     private Set<Singer> singers;
+    @OneToMany(mappedBy = "event")
+    private List<Image> images;
 
     public Event() {
         this.singers = new HashSet<>();
@@ -46,6 +49,15 @@ public class Event {
 
     public Event setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public Event setImages(List<Image> images) {
+        this.images = images;
         return this;
     }
 

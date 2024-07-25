@@ -33,7 +33,7 @@
             <p class="event-images-header">Event Images:</p>
             <div class="row event-images">
                 <div th:each="imageUrl : ${event.imageUrls}" class="col-md-3 mb-4">
-                    <img th:src="${imageUrl}" alt="Event Image" class="img-thumbnail singer-img" style="max-width: 200px;"  >
+                    <img th:src="@{${imageUrl}}" alt="Event Image" class="img-thumbnail" style="max-width: 200px;">
                 </div>
             </div>
             </th:block>

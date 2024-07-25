@@ -38,7 +38,7 @@ public class EventDetailsDTO {
     public EventDetailsDTO(){
         this.singers = new HashSet<>();
         this.singersName = new HashSet<>();
-        this.imageUrls = List.of("/images/tanya-boeva.jpg");
+        this.imageUrls = new ArrayList<>();
     }
 
     public List<String> getImageUrls() {
