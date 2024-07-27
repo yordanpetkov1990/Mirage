@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -60,7 +62,18 @@ public class EventController {
     @GetMapping("/events")
     public String showEvents(Model model){
         Set<EventDTO> allEvents = this.eventService.getAllEvents();
-        model.addAttribute("events",allEvents);
+        LocalDate today = LocalDate.now();
+
+        List<EventDTO> upcomingEvents = allEvents.stream()
+                .filter(event -> LocalDate.parse(event.getEventDate()).isAfter(today) || LocalDate.parse(event.getEventDate()).isEqual(today))
+                .toList();
+        List<EventDTO> pastEvents = allEvents.stream()
+                .filter(event -> LocalDate.parse(event.getEventDate()).isBefore(today))
+                .toList();
+
+        model.addAttribute("upcomingEvents", upcomingEvents);
+        model.addAttribute("pastEvents", pastEvents);
+
 
 
         return "events";

@@ -8,14 +8,35 @@
 <body>
 <div th:replace="fragments/header">...</div>
 <div class="container mt-5">
-    <h2 class="text-center">Upcoming Events</h2>
-    <div class="row" th:each="event : ${events}">
-        <div class="col-md-4 mb-4">
+    <h2 class="text-center">Events</h2>
+
+    <div class="text-center mb-4">
+        <button id="upcoming-events-btn" class="btn btn-primary">Upcoming Events</button>
+        <button id="past-events-btn" class="btn btn-secondary">Past Events</button>
+    </div>
+
+
+    <div id="events-container" class="row">
+        <div th:each="event : ${upcomingEvents}" class="col-md-4 mb-4 upcoming-event">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${event.name}">Event Name</h5>
                     <p class="card-text" style="color: cornsilk" th:text="'Date: ' + ${event.eventDate}">Event Date</p>
-                    <p style="font-size: 20px;margin-bottom: 0" >Singers: </p>
+                    <p style="font-size: 20px;margin-bottom: 0">Singers:</p>
+                    <div th:each="singer : ${event.singers}">
+                        <p class="card-text singer" style="text-align: center;font-size: 25px;color: wheat;" th:text="${singer}">Event Singer</p>
+                    </div>
+                    <a th:href="@{/event/{id}(id=${event.id})}" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div th:each="event : ${pastEvents}" class="col-md-4 mb-4 past-event">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${event.name}">Event Name</h5>
+                    <p class="card-text" style="color: cornsilk" th:text="'Date: ' + ${event.eventDate}">Event Date</p>
+                    <p style="font-size: 20px;margin-bottom: 0">Singers:</p>
                     <div th:each="singer : ${event.singers}">
                         <p class="card-text singer" style="text-align: center;font-size: 25px;color: wheat;" th:text="${singer}">Event Singer</p>
                     </div>
@@ -25,9 +46,31 @@
         </div>
     </div>
 </div>
-<footer th:insert="fragments/footer" ></footer>
+<footer th:insert="fragments/footer"></footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $('.past-event').hide();
+
+
+        $('#upcoming-events-btn').click(function() {
+            $('#events-container .past-event').hide();
+            $('#events-container .upcoming-event').show();
+            $(this).addClass('btn-primary').removeClass('btn-secondary');
+            $('#past-events-btn').addClass('btn-secondary').removeClass('btn-primary');
+        });
+
+        $('#past-events-btn').click(function() {
+            $('#events-container .upcoming-event').hide();
+            $('#events-container .past-event').show();
+            $(this).addClass('btn-primary').removeClass('btn-secondary');
+            $('#upcoming-events-btn').addClass('btn-secondary').removeClass('btn-primary');
+        });
+    });
+</script>
 </body>
 </html>

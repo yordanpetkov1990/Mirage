@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class Event {
 
     public Event() {
         this.singers = new HashSet<>();
+        this.images = new ArrayList<>();
     }
 
     public Long getId() {

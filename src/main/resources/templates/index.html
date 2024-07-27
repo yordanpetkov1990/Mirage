@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Welcome - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -12,8 +12,8 @@
     <p class="text-center" th:text="#{index_page_desc}">Experience the best nightlife in town. Join us for unforgettable nights filled with great music, drinks, and atmosphere.</p>
     <div class="text-center mt-4">
         <a href="/events" th:text="#{index_event_button}" class="btn btn-primary btn-lg">View Events</a>
-        <a href="/login" th:text="#{nav_bar_login}" class="btn btn-secondary btn-lg">Login</a>
-        <a href="/register"  th:text="#{nav_bar_login_register}" class="btn btn-secondary btn-lg">Register</a>
+        <a href="/login" sec:authorize="!isAuthenticated()" th:text="#{nav_bar_login}" class="btn btn-secondary btn-lg">Login</a>
+        <a href="/register"  sec:authorize="!isAuthenticated()" th:text="#{nav_bar_login_register}" class="btn btn-secondary btn-lg">Register</a>
     </div>
 </div>
 <footer th:insert="fragments/footer" ></footer>
