@@ -3,6 +3,7 @@ package nightclub.web.nightclub.controller;
 import nightclub.web.nightclub.entities.Job;
 import nightclub.web.nightclub.entities.UserDetails.UserDetailsEntity;
 import nightclub.web.nightclub.services.JobService;
+import nightclub.web.nightclub.services.impl.EmailService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,11 @@ import java.util.Optional;
 public class JobController {
 
    private final JobService jobService;
+   private final EmailService emailService;
 
-    public JobController(JobService jobService) {
+    public JobController(JobService jobService, EmailService emailService) {
         this.jobService = jobService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/careers")
@@ -56,6 +59,10 @@ public class JobController {
                 }
                 String filePath = uploadDirectory + cv.getOriginalFilename();
                 cv.transferTo(new File(filePath));
+
+                String subject = "Application Received: " + title;
+                String message = "Dear " + name + ",\n\nThank you for applying for the position of " + title + ". We have received your application and will review it shortly.\n\nBest regards,\nNightclub Team";
+                emailService.sendEmail(email, subject, message);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "error";
@@ -63,7 +70,7 @@ public class JobController {
         }
 
 
-        // You can add more logic here to save application details to the database
+
         return "redirect:/home";
     }
 }
