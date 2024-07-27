@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findById(id).get();
     }
 
+    @Override
+    public Iterable<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
     private User map(RegistrationDTO registrationDTO) {
         User mappedEntity = modelMapper.map(registrationDTO, User.class);
 

@@ -28,6 +28,25 @@ public class JobController {
         this.emailService = emailService;
     }
 
+    @GetMapping("/admin/add-job")
+    public String showAddJobForm() {
+        return "add-job";
+    }
+    @PostMapping("/admin/add-job")
+    public String addJob(@RequestParam("title") String title,
+                         @RequestParam("description") String description,
+                         @RequestParam("requirements") String requirements) {
+
+        Job newJob = new Job();
+        newJob.setTitle(title);
+        newJob.setDescription(description);
+        newJob.setRequirements(requirements);
+
+        jobService.addJob(newJob);
+
+        return "redirect:/careers";
+    }
+
     @GetMapping("/careers")
     public String showJobListings(Model model) {
         model.addAttribute("jobs", jobService.getAllJobs());

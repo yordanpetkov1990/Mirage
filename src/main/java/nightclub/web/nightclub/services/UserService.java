@@ -8,4 +8,5 @@ public interface UserService {
 
     User findById(Long id);
 
+    Iterable<User> getAllUsers();
 }
