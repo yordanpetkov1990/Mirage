@@ -1,6 +1,7 @@
 package nightclub.web.nightclub.controller;
 
 import nightclub.web.nightclub.services.FAQService;
+import nightclub.web.nightclub.services.JobService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +11,11 @@ public class HomeController {
 
     private final FAQService faqService;
 
-    public HomeController(FAQService faqService) {
+    private final JobService jobService;
+
+    public HomeController(FAQService faqService, JobService jobService) {
         this.faqService = faqService;
+        this.jobService = jobService;
     }
 
     @GetMapping("/")

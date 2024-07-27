@@ -4,25 +4,31 @@
     <title>Careers - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .card-title, .card-text {
+            color: #343a40;
+        }
+    </style>
 </head>
 <body>
-<th:insert fragment="header :: header"/>
+<div th:replace="fragments/header">...</div>
 <div class="container mt-5">
     <h2 class="text-center">Careers</h2>
     <p>We are always looking for talented individuals to join our team. Check out our current job openings below.</p>
-    <div class="row" th:each="job : ${jobs}">
-        <div class="col-md-4 mb-4">
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="job : ${jobs}">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${job.title}">Job Title</h5>
                     <p class="card-text" th:text="${job.description}">Job Description</p>
                     <p class="card-text" th:text="${job.requirements}">Requirements</p>
+                    <a th:href="@{/apply/{id}(id=${job.id})}" class="btn btn-primary">Apply Now</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<th:insert fragment="footer :: footer"/>
+<footer th:insert="fragments/footer" ></footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

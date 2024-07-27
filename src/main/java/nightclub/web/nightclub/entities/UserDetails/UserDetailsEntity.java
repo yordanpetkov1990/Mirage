@@ -13,19 +13,27 @@ public class UserDetailsEntity extends User {
 
     private final String phoneNumber;
 
+    private final String email;
+
     public UserDetailsEntity(
             String username,
             String password,
             Collection<? extends GrantedAuthority> authorities,
             String firstName,
             String lastName,
-            Long id, String phoneNumber
+            Long id, String phoneNumber,
+            String email
     ) {
         super(username, password, authorities);
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
         this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPhoneNumber() {

@@ -37,7 +37,8 @@ public class UserEntityDetailsService implements UserDetailsService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getId(),
-                user.getPhoneNumber()
+                user.getPhoneNumber(),
+                user.getEmail()
         );
     }
 
