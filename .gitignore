@@ -4,6 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+# Ignore all files in the images directory
+/src/main/resources/static/images/
+
+# Ignore all files in the jobApplications directory
+/src/main/resources/static/jobApplications/
 
 ### STS ###
 .apt_generated
