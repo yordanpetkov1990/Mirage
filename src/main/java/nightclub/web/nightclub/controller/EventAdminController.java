@@ -55,7 +55,7 @@ public class EventAdminController {
         return "redirect:/admin/events";
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Long id) {
         eventService.deleteById(id);
         return "redirect:/admin/events";

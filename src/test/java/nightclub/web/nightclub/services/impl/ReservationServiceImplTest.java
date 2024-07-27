@@ -71,7 +71,8 @@ public class ReservationServiceImplTest {
 
         UserDetailsEntity userDetailsEntity = new UserDetailsEntity(
                 "username", "password", Collections.emptyList(),
-                "John", "Doe", 1L, "1234567890"
+                "John", "Doe", 1L, "1234567890",
+                "test@email.com"
         );
 
         Event event = new Event();
