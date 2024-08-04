@@ -9,4 +9,10 @@ public interface UserService {
     User findById(Long id);
 
     Iterable<User> getAllUsers();
+
+    boolean findUserByEmail(String value);
+
+    boolean findUserByUserName(String value);
+
+    boolean findByPhoneNumber(String value);
 }

@@ -11,27 +11,27 @@
             <li class="nav-item"><a class="nav-link" href="/menu" th:text="#{nav_bar_menu}">Menu</a></li>
             <li class="nav-item"><a class="nav-link" href="/contact" th:text="#{nav_bar_contact}">Contact</a></li>
             <li class="nav-item"><a class="nav-link" href="/about"  th:text="#{nav_bar_about}">About</a></li>
-            <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"  href="/reservations">My Reservations</a></li>
+            <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:text="#{nav_bar_my_reservations}"  href="/reservations">My Reservations</a></li>
             <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:text="#{nav_bar_login}" href="/login">Login</a></li>
             <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:text="#{nav_bar_login_register}" href="/register">Register</a></li>
             <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{nav_bar_admin}">
                     Admin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/admin/add-event">Add Event</a>
-                    <a class="dropdown-item" href="/admin/menu-item/add">Add MenuItem</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_add_event}" href="/admin/add-event">Add Event</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_add_menuitem}" href="/admin/menu-item/add">Add MenuItem</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/admin/reservations">Manage reservations</a>
-                    <a class="dropdown-item" href="/admin/events/add-image">Add images to event</a>
-                    <a class="dropdown-item" href="/admin/events">Manage events</a>
-                    <a class="dropdown-item" href="/admin/add-job">Add new job</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_manage_reservations}" href="/admin/reservations">Manage reservations</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_add_image_to_event}" href="/admin/events/add-image">Add images to event</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_manage_events}"  href="/admin/events">Manage events</a>
+                    <a class="dropdown-item" th:text="#{nav_bar_admin_add_job}" href="/admin/add-job">Add new job</a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
                 <form th:method="post" th:action="@{/logout}" style="display: inline;">
-                    <button type="submit" class="nav-link btn btn-link" style="padding: 7px;font-size: 20px;" >Logout</button>
+                    <button type="submit" class="nav-link btn btn-link" style="padding: 7px;font-size: 20px;" th:text="#{nav_bar_logout}" >Logout</button>
                 </form>
             </li>
             <li class="nav-item">

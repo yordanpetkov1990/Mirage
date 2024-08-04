@@ -5,6 +5,8 @@ import nightclub.web.nightclub.entities.UserDetails.UserDetailsEntity;
 import nightclub.web.nightclub.entities.dtos.EditReservationDTO;
 import nightclub.web.nightclub.entities.dtos.ReservationDTO;
 import nightclub.web.nightclub.entities.dtos.ShowReservationDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,4 +26,10 @@ public interface ReservationService {
     void updateReservation(EditReservationDTO reservationDTO);
 
     void removeAllOlderThanNow();
+
+    Page<Reservation> findPendingReservations(Pageable pageable);
+
+    Page<Reservation> findReservationsByEventAndStatus(Long eventId, Pageable pageable);
+
+    void cancelReservation(Long reservationId);
 }

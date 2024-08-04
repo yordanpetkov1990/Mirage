@@ -42,15 +42,15 @@
                    style="font-size: 15px">password error message</small>
         </div>
         <div class="form-group">
-            <label th:for="firstName">firstName:</label>
+            <label th:for="firstName">First name:</label>
             <input th:field="*{firstName}" type="text" class="form-control" id="firstName" name="firstName">
         </div>
         <div class="form-group">
-            <label th:for="lastName">lastName:</label>
+            <label th:for="lastName">Last name:</label>
             <input th:field="*{lastName}" type="text" class="form-control" id="lastName" name="lastName">
         </div>
         <div class="form-group">
-            <label th:for="phoneNumber">phoneNumber:</label>
+            <label th:for="phoneNumber">Phone number:</label>
             <input th:field="*{phoneNumber}"
                    th:errorclass="'is-invalid bg-danger'" type="text" class="form-control" id="phoneNumber" name="phoneNumber">
             <small th:each="error: ${#fields.errors('phoneNumber')}"

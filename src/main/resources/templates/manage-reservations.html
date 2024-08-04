@@ -1,57 +1,121 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Reservation</title>
+    <title>Manage Reservations - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .custom-container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .custom-form {
+            margin-bottom: 1.5rem;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .update-button {
+            text-align: right;
+        }
+        .update-button button {
+            margin-left: auto;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container mt-5" th:unless="${noNewReservations} OR ${noAvailableTables}">
-    <h2 class="text-center">Edit Reservation</h2>
-    <form th:action="@{/admin/reservations/update}" th:method="post" >
+<div class="container custom-container mt-5">
+    <h2 class="text-center mb-4">Manage Reservations</h2>
+
+    <!-- Event Selection Form -->
+    <form th:action="@{/admin/reservations}" method="get" class="custom-form">
         <div class="form-group">
-            <label>ID:</label>
-            <input type="text" class="form-control" th:value="${reservation.id}" th:name="id" readonly>
-        </div>
-        <div class="form-group">
-            <label>Owner:</label>
-            <input type="text" class="form-control" th:value="${reservation.owner.username}" readonly>
-        </div>
-        <div class="form-group">
-            <label>Event:</label>
-            <input type="text" class="form-control" th:value="${reservation.event.name}" readonly>
-        </div>
-        <div class="form-group">
-            <label>Number of People:</label>
-            <input type="number" class="form-control" th:name="numberOfPeople" th:value="${reservation.numberOfPeople}" readonly>
-        </div>
-        <div class="form-group">
-            <label>Status:</label>
-            <select class="form-control" th:name="status">
-                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"
-                        th:selected="${reservation.status == status}"></option>
+            <label for="event">Select Event:</label>
+            <select id="event" name="eventId" class="form-control" required>
+                <option th:each="event : ${events}" th:value="${event.id}" th:text="${event.name} + ' - ' + ${event.eventDate}"></option>
             </select>
         </div>
-        <div class="form-group">
-            <label>Tables:</label>
-            <select class="form-control" th:name="tableIds" multiple>
-                <option th:each="table : ${tables}" th:value="${table.id}"
-                        th:text="${table.number} + ' - ' + ${table.capacity} + ' capacity' " th:selected="${reservation.tables.contains(table)}"></option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Update Reservation</button>
+        <button type="submit" class="btn btn-primary">View Reservations</button>
     </form>
+
+    <!-- Reservation Details -->
+    <div th:if="${reservation != null}">
+        <h3>Reservation for Event: <span th:text="${eventName}"></span></h3>
+        <table class="table table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event</th>
+                <th>Number of People</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Tables</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.event.name}"></td>
+                <td th:text="${reservation.numberOfPeople}"></td>
+                <td th:text="${reservation.status}"></td>
+                <td th:text="${reservation.createdAt}"></td>
+                <td>
+                    <ul>
+                        <li th:each="table : ${reservation.tables}" th:text="${table.number}"></li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Update Reservation Form -->
+        <div class="update-button">
+            <form th:action="@{/admin/reservations/update}" method="post">
+                <input type="hidden" name="id" th:value="${reservation.id}">
+                <div class="form-group">
+                    <label for="tables">Tables:</label>
+                    <select id="tables" name="tableIds" class="form-control" multiple>
+                        <option th:each="table : ${tables}" th:value="${table.id}" th:text="${table.number}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Reservation</button>
+            </form>
+        </div>
+
+        <!-- Pagination Controls -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/reservations(eventId=${eventId}, page=${currentPage - 1})}" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/admin/reservations(eventId=${eventId}, page=${i})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/reservations(eventId=${eventId}, page=${currentPage + 1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Message for no reservations -->
+    <div th:if="${noReservations}">
+        <p class="text-center mt-4">No reservations for this event.</p>
+    </div>
+
+    <!-- Message for no available tables -->
+    <div th:if="${noAvailableTables}">
+        <p class="text-center mt-4">No available tables for this event.</p>
+    </div>
 </div>
-<div class="container mt-5" th:if="${noNewReservations}">
-    <h2 class="text-center">No New Reservations</h2>
-    <p class="text-center">There are currently no new reservations to edit.</p>
-</div>
-<div class="container mt-5" th:if="${noAvailableTables}">
-    <h2 class="text-center">No Available Tables</h2>
-    <p class="text-center">There are currently not any available tables</p>
-</div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

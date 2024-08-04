@@ -5,6 +5,7 @@ import nightclub.web.nightclub.entities.dtos.AddEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,4 +27,6 @@ public interface EventService {
     void deleteById(Long id);
 
     void removeAllOlderThan2Months();
+
+    List<EventDTO> getAllFutureEvents();
 }

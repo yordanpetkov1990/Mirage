@@ -1,9 +1,15 @@
 package nightclub.web.nightclub.entities.dtos;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
+
 public class ReservationDTO {
     public String phoneNumber;
+    @Min(value = 8,message = "If you want to make a reservation you need to be at least 8 people")
     public int guests;
-    private EventDetailsDTO eventDetailsDTO;
+    private String  eventName;
     private Long eventId;
 
 
@@ -25,12 +31,12 @@ public class ReservationDTO {
         return this;
     }
 
-    public EventDetailsDTO getEventDetailsDTO() {
-        return eventDetailsDTO;
+    public String getEventName() {
+        return eventName;
     }
 
-    public ReservationDTO setEventDetailsDTO(EventDetailsDTO eventDetailsDTO) {
-        this.eventDetailsDTO = eventDetailsDTO;
+    public ReservationDTO setEventName(String eventName) {
+        this.eventName = eventName;
         return this;
     }
 

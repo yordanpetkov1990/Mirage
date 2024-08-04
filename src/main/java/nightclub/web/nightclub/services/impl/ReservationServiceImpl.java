@@ -12,6 +12,8 @@ import nightclub.web.nightclub.services.EventService;
 import nightclub.web.nightclub.services.ReservationService;
 import nightclub.web.nightclub.services.TableService;
 import nightclub.web.nightclub.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(status == null || status.isEmpty()){
             return this.reservationRepository.findByOwnerId(id).stream().map(reservation -> {
                 ShowReservationDTO showReservationDTO = new ShowReservationDTO();
+                showReservationDTO.setId(reservation.getId());
                 showReservationDTO.setDate(reservation.getEvent().getDate());
                 showReservationDTO.setEventName(reservation.getEvent().getName());
                 showReservationDTO.setNumberOfGuests(reservation.getNumberOfPeople());
@@ -69,6 +72,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
       return   this.reservationRepository.findByOwnerIdAndStatus(id, StatusEnum.valueOf(status.toUpperCase())).stream().map(reservation -> {
             ShowReservationDTO showReservationDTO = new ShowReservationDTO();
+            showReservationDTO.setId(reservation.getId());
             showReservationDTO.setDate(reservation.getEvent().getDate());
             showReservationDTO.setEventName(reservation.getEvent().getName());
             showReservationDTO.setNumberOfGuests(reservation.getNumberOfPeople());
@@ -94,16 +98,18 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationRepository.findById(reservationDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found with ID: "
                         + reservationDTO.getId()));
-        reservation.setStatus(StatusEnum.valueOf(reservationDTO.getStatus()));
+        reservation.setStatus(StatusEnum.CONFIRMED);
         Set<TableEntity> tables = new HashSet<>();
-        for (Long tableId : reservationDTO.getTableIds()) {
-            TableEntity tableEntity = tableService.findById(tableId).orElseThrow(() -> new IllegalArgumentException("Table not found with ID: "
-                    + tableId));
-            tables.add(tableEntity);
-            tableEntity.setAvailable(false);
 
-        }
+        for (Long tableId : reservationDTO.getTableIds()) {
+                TableEntity tableEntity = tableService.findById(tableId).orElseThrow(() -> new IllegalArgumentException("Table not found with ID: "
+                        + tableId));
+                tables.add(tableEntity);
+                tableEntity.setAvailable(false);
+
+            }
         reservation.setTables(tables);
+
         this.reservationRepository.saveAndFlush(reservation);
     }
 
@@ -113,4 +119,22 @@ public class ReservationServiceImpl implements ReservationService {
     public void removeAllOlderThanNow() {
         this.reservationRepository.deleteAllByEvent_DateLessThan(LocalDate.now());
     }
+
+    @Override
+    public Page<Reservation> findPendingReservations(Pageable pageable) {
+        return this.reservationRepository.findByStatus(StatusEnum.PENDING, pageable);
+    }
+
+    @Override
+    public Page<Reservation> findReservationsByEventAndStatus(Long eventId, Pageable pageable) {
+        return this.reservationRepository.findByStatusAndEvent_Id(StatusEnum.PENDING,eventId,pageable);
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public void cancelReservation(Long reservationId) {
+        this.reservationRepository.deleteById(reservationId);
+    }
+
 }

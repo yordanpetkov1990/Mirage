@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import nightclub.web.nightclub.entities.Singer;
 
 import java.math.BigDecimal;
@@ -17,10 +20,13 @@ import java.util.Set;
 public class EventDetailsDTO {
 
     private Long id;
+    @NotBlank
+    @Size(min = 5,max = 20)
     private String name;
-
+    @NotBlank()
+    @Size(min = 20)
     private String description;
-
+    @FutureOrPresent
     private LocalDate date;
 
     private LocalTime startTime;

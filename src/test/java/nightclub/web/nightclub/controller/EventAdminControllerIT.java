@@ -49,7 +49,6 @@ public class EventAdminControllerIT {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void testEditEventGet() throws Exception {
-        // Assuming EventDetailsDTO is a DTO object representing an event
         EventDetailsDTO eventDetailsDTO = new EventDetailsDTO();
         eventDetailsDTO.setId(1L);
         eventDetailsDTO.setName("Test Event");

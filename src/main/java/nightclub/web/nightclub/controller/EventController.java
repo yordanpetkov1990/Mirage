@@ -1,5 +1,6 @@
 package nightclub.web.nightclub.controller;
 
+import jakarta.validation.Valid;
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.dtos.AddEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
@@ -46,16 +47,16 @@ public class EventController {
     }
 
     @PostMapping("/admin/add-event")
-    public String DoAddEvent(AddEventDTO addEventDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String doAddEvent(@Valid @ModelAttribute("addEventDTO") AddEventDTO addEventDTO,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("eventDTO", addEventDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.eventDTO",bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addEventDTO", addEventDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addEventDTO", bindingResult);
             return "redirect:/admin/add-event";
         }
 
         eventService.registerEvent(addEventDTO);
-
         return "redirect:/";
     }
 

@@ -1,17 +1,18 @@
 package nightclub.web.nightclub.controller;
 
+import jakarta.validation.Valid;
 import nightclub.web.nightclub.entities.Job;
 import nightclub.web.nightclub.entities.UserDetails.UserDetailsEntity;
+import nightclub.web.nightclub.entities.dtos.AddJobDTO;
 import nightclub.web.nightclub.services.JobService;
 import nightclub.web.nightclub.services.impl.EmailService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,23 +28,25 @@ public class JobController {
         this.jobService = jobService;
         this.emailService = emailService;
     }
+    @ModelAttribute("addJobDTO")
+    public AddJobDTO addJobDTO(){
+        return new AddJobDTO();
+    }
 
     @GetMapping("/admin/add-job")
     public String showAddJobForm() {
         return "add-job";
     }
     @PostMapping("/admin/add-job")
-    public String addJob(@RequestParam("title") String title,
-                         @RequestParam("description") String description,
-                         @RequestParam("requirements") String requirements) {
+    public String addJob(@Valid  AddJobDTO addJobDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addJobDTO", result);
+            redirectAttributes.addFlashAttribute("addJobDTO", addJobDTO);
+            return "redirect:/admin/add-job";
+        }
 
-        Job newJob = new Job();
-        newJob.setTitle(title);
-        newJob.setDescription(description);
-        newJob.setRequirements(requirements);
 
-        jobService.addJob(newJob);
-
+        jobService.addJob(addJobDTO);
         return "redirect:/careers";
     }
 

@@ -9,6 +9,7 @@ import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 import nightclub.web.nightclub.entities.dtos.SingerDTO;
 import nightclub.web.nightclub.repository.EventRepository;
 import nightclub.web.nightclub.services.EventService;
+import nightclub.web.nightclub.services.ImageService;
 import nightclub.web.nightclub.services.SingerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,10 +30,13 @@ public class EventServiceImpl implements EventService {
     private final SingerService singerService;
     private final ModelMapper modelMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, SingerService singerService, ModelMapper modelMapper) {
+    private final ImageService imageService;
+
+    public EventServiceImpl(EventRepository eventRepository, SingerService singerService, ModelMapper modelMapper, ImageService imageService) {
         this.eventRepository = eventRepository;
         this.singerService = singerService;
         this.modelMapper = modelMapper;
+        this.imageService = imageService;
     }
 
 
@@ -82,6 +87,7 @@ public class EventServiceImpl implements EventService {
     @Transactional
     @Modifying
     public void deleteById(Long id) {
+        this.imageService.deleteAllByEventId(id);
         this.eventRepository.deleteById(id);
     }
 
@@ -90,6 +96,12 @@ public class EventServiceImpl implements EventService {
     @Modifying
     public void removeAllOlderThan2Months() {
         this.eventRepository.deleteAllByDateLessThan(LocalDate.now().minusMonths(2));
+    }
+
+    @Override
+    @Transactional
+    public List<EventDTO> getAllFutureEvents() {
+        return this.eventRepository.findAllByDateGreaterThanEqualOrderByDate(LocalDate.now()).stream().map(this::map).collect(Collectors.toList());
     }
 
     @Transactional

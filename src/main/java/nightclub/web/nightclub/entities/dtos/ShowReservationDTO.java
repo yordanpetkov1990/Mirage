@@ -3,6 +3,8 @@ package nightclub.web.nightclub.entities.dtos;
 import java.time.LocalDate;
 
 public class ShowReservationDTO {
+
+    private Long id;
     private String eventName;
 
     private LocalDate date;
@@ -17,6 +19,15 @@ public class ShowReservationDTO {
 
     public ShowReservationDTO setEventName(String eventName) {
         this.eventName = eventName;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ShowReservationDTO setId(Long id) {
+        this.id = id;
         return this;
     }
 

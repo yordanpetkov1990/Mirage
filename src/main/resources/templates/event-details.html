@@ -39,7 +39,7 @@
             </th:block>
 <!--        th:href="@{/order/details(id=${order.id})}"-->
 <!--            <a th:href="@{/reservations(status='canceled')}" class="btn btn-outline-primary" th:classappend="${status == 'canceled'} ? 'active' : ''">Canceled</a>-->
-            <a th:href="@{/booking/(event_id=${event.id})}" class="btn btn-success mt-4">Make a Reservation</a>
+            <a  th:if="${event.date.isEqual(T(java.time.LocalDate).now()) or event.date.isAfter(T(java.time.LocalDate).now())}" th:href="@{/booking(event_id=${event.id})}" class="btn btn-success mt-4">Make a Reservation</a>
         </div>
     </div>
 </div>

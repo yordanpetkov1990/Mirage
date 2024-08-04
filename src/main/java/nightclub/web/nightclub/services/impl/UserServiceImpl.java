@@ -35,6 +35,21 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findAll();
     }
 
+    @Override
+    public boolean findUserByEmail(String value) {
+        return this.userRepository.findByEmail(value).isPresent();
+    }
+
+    @Override
+    public boolean findUserByUserName(String value) {
+        return this.userRepository.findByUsername(value).isPresent();
+    }
+
+    @Override
+    public boolean findByPhoneNumber(String value) {
+        return this.userRepository.findByPhoneNumber(value).isPresent();
+    }
+
     private User map(RegistrationDTO registrationDTO) {
         User mappedEntity = modelMapper.map(registrationDTO, User.class);
 

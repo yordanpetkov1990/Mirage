@@ -5,21 +5,27 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import nightclub.web.nightclub.validation.annotation.UniqueEmail;
+import nightclub.web.nightclub.validation.annotation.UniquePhoneNumber;
+import nightclub.web.nightclub.validation.annotation.UniqueUsername;
 
 public class RegistrationDTO {
 
     @NotBlank
-    @Size(min = 5,max = 20)
+    @UniqueUsername
+    @Size(min = 5,max = 20,message = "Length must be between 5 and 20")
     private String username;
-    @NotBlank
+    @NotBlank(message = "Password must not be blank")
     private String password;
-    @Email
+    @Email(message = "Please enter a valid email")
+    @UniqueEmail
     private String email;
-    @Size(min = 2,max = 20)
+    @Size(min = 2,max = 20,message = "Length must be between 2 and 20")
     private String firstName;
-    @Size(min = 2,max = 20)
+    @Size(min = 2,max = 20,message = "Length must be between 2 and 20")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "Phone number must not be blank")
+    @UniquePhoneNumber
     private String phoneNumber;
 
     public String getUsername() {

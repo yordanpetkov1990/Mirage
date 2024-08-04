@@ -6,4 +6,5 @@ public interface ImageService {
 
     void saveImage(Image image);
 
+    void deleteAllByEventId(Long eventId);
 }

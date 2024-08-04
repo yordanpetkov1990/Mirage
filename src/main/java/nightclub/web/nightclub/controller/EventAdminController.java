@@ -1,5 +1,6 @@
 package nightclub.web.nightclub.controller;
 
+import jakarta.validation.Valid;
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.Image;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
@@ -9,8 +10,10 @@ import nightclub.web.nightclub.services.ImageService;
 import nightclub.web.nightclub.services.SingerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;

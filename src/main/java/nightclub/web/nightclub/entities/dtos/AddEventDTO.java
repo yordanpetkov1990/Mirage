@@ -1,15 +1,29 @@
 package nightclub.web.nightclub.entities.dtos;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 public class AddEventDTO {
+    @Size(min = 5, max = 20, message = "Event name must be between 5 and 20 characters")
     private String name;
+
+    @Size(min = 20, max = 100, message = "Description must be between 20 and 100 characters")
     private String description;
+
+    @NotNull(message = "Date is required")
+    @FutureOrPresent(message = "Event date must be today or in the future")
     private LocalDate date;
+
+    @NotNull(message = "Start time is required")
     private LocalTime startTime;
+
+    @NotNull(message = "End time is required")
     private LocalTime endTime;
     private BigDecimal entryFee;
     private Integer capacity;

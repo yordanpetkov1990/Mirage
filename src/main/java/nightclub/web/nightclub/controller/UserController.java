@@ -59,6 +59,13 @@ public class UserController {
     public String login(){
         return "login";
     }
+    @GetMapping("/users/login-error")
+    public String viewLoginError(Model model) {
+
+        model.addAttribute("showErrorMessage", true);
+
+        return "login";
+    }
 
     @GetMapping("/reservations")
     public String showUserReservations(
@@ -72,6 +79,17 @@ public class UserController {
         model.addAttribute("reservations", reservationsByUserAndStatus);
         model.addAttribute("status", status);
         return "my-reservations";
+    }
+
+    @PostMapping("/reservations/cancel")
+    public String cancelReservation(@RequestParam("reservationId") Long reservationId, RedirectAttributes redirectAttributes) {
+        try {
+           reservationService.cancelReservation(reservationId);
+            redirectAttributes.addFlashAttribute("message", "Reservation canceled successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to cancel the reservation.");
+        }
+        return "redirect:/reservations";
     }
 
 }

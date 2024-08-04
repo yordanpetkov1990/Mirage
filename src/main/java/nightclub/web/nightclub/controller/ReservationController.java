@@ -32,31 +32,46 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @ModelAttribute("ReservationDTO")
-    public ReservationDTO reservationDTO(
+
+    @GetMapping("/booking")
+    public String makeReservation(
+            Model model,
             @AuthenticationPrincipal UserDetailsEntity userDetailsEntity,
             @RequestParam(value = "event_id") Long eventId
-    ){
+    ) {
 
-        EventDetailsDTO eventDetailsDTO = this.eventService.findEventById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
-        return new ReservationDTO().setPhoneNumber(userDetailsEntity.getPhoneNumber())
-                .setEventDetailsDTO(eventDetailsDTO)
-                .setEventId(eventId);
-    }
+        if (!model.containsAttribute("ReservationDTO")) {
+            EventDetailsDTO eventDetailsDTO = this.eventService.findEventById(eventId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
 
+            ReservationDTO reservationDTO = new ReservationDTO()
+                    .setPhoneNumber(userDetailsEntity.getPhoneNumber())
+                    .setEventName(eventDetailsDTO.getName() + " - " +eventDetailsDTO.getDate())
+                    .setEventId(eventId);
 
-    @GetMapping("/booking/")
-    public String makeReservation() {
-
+            model.addAttribute("ReservationDTO", reservationDTO);
+        }
         return "booking";
     }
 
+
     @PostMapping("/booking")
-    public String doMakeReservation(@Valid ReservationDTO reservationDTO,
-                                    BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                    @AuthenticationPrincipal UserDetailsEntity userDetailsEntity)
-    {
-        reservationService.makeReservation(reservationDTO,userDetailsEntity);
+    public String doMakeReservation(
+            @Valid ReservationDTO reservationDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetailsEntity userDetailsEntity
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("ReservationDTO", reservationDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ReservationDTO", bindingResult);
+            return "redirect:/booking?event_id=" + reservationDTO.getEventId();
+        }
+
+
+        reservationService.makeReservation(reservationDTO, userDetailsEntity);
         return "redirect:/";
     }
+
+
 }
