@@ -3,10 +3,7 @@ package nightclub.web.nightclub.services.impl;
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.Image;
 import nightclub.web.nightclub.entities.Singer;
-import nightclub.web.nightclub.entities.dtos.AddEventDTO;
-import nightclub.web.nightclub.entities.dtos.EventDTO;
-import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
-import nightclub.web.nightclub.entities.dtos.SingerDTO;
+import nightclub.web.nightclub.entities.dtos.*;
 import nightclub.web.nightclub.repository.EventRepository;
 import nightclub.web.nightclub.services.EventService;
 import nightclub.web.nightclub.services.ImageService;
@@ -79,7 +76,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void save(EventDetailsDTO eventDTO) {
+    public void save(EditEventDTO eventDTO) {
         this.eventRepository.saveAndFlush(mapToEvent(eventDTO));
     }
 
@@ -104,6 +101,15 @@ public class EventServiceImpl implements EventService {
         return this.eventRepository.findAllByDateGreaterThanEqualOrderByDate(LocalDate.now()).stream().map(this::map).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public EditEventDTO findEventByIdToEdit(Long id) {
+        Optional<Event> byId = this.eventRepository.findById(id);
+        EditEventDTO map = this.modelMapper.map(byId, EditEventDTO.class);
+        map.setSingersName(byId.get().getSingers().stream().map(Singer::getName).collect(Collectors.toList()));
+        return map;
+    }
+
     @Transactional
     protected EventDetailsDTO mapToDetails(Event event) {
         EventDetailsDTO map = modelMapper.map(event, EventDetailsDTO.class);
@@ -120,7 +126,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Transactional
-    protected Event mapToEvent(EventDetailsDTO eventDTO) {
+    protected Event mapToEvent(EditEventDTO eventDTO) {
         Event map = modelMapper.map(eventDTO, Event.class);
         map.setSingers(eventDTO.getSingersName().stream().map(s -> this.singerService.getSingerByName(s).get()).collect(Collectors.toSet()));
         return map;

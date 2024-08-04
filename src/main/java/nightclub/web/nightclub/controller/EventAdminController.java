@@ -3,6 +3,7 @@ package nightclub.web.nightclub.controller;
 import jakarta.validation.Valid;
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.Image;
+import nightclub.web.nightclub.entities.dtos.EditEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 import nightclub.web.nightclub.services.EventService;
@@ -44,17 +45,25 @@ public class EventAdminController {
         return "list-events";
     }
 
+
     @GetMapping("/edit/{id}")
     public String editEvent(@PathVariable Long id, Model model) {
-        EventDetailsDTO event = eventService.findEventById(id).get();
-        model.addAttribute("event", event);
+        if(!model.containsAttribute("EditEventDTO")){
+            EditEventDTO event = eventService.findEventByIdToEdit(id);
+            model.addAttribute("EditEventDTO", event);
+        }
+
         return "events-edit";
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateEvent(@PathVariable Long id, @ModelAttribute EventDetailsDTO eventDTO) {
-        eventDTO.setId(id);
-        eventService.save(eventDTO);
+    @PostMapping("/edit")
+    public String updateEvent(@Valid EditEventDTO editEventDTO,BindingResult bindingResult,RedirectAttributes redirectAttributes) {
+            if(bindingResult.hasErrors()){
+                redirectAttributes.addFlashAttribute("EditEventDTO",editEventDTO);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.EditEventDTO",bindingResult);
+                return "redirect:/admin/events/edit/" + editEventDTO.getId();
+            }
+        eventService.save(editEventDTO);
         return "redirect:/admin/events";
     }
 

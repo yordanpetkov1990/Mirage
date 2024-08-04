@@ -32,18 +32,31 @@
 <body>
 <div class="container">
     <h1 class="text-center mb-4">Edit Event</h1>
-    <form th:action="@{/admin/events/edit/{id}(id=${event.id})}" th:object="${event}" method="post">
+    <form th:action="@{/admin/events/edit}" th:object="${EditEventDTO}" method="post">
+        <input type="hidden" id="event_id" th:field="*{id}">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control">
+            <input type="text" id="name" th:errorclass="'is-invalid bg-danger'" th:field="*{name}" class="form-control">
+            <small th:each="error: ${#fields.errors('name')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">name error message</small>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <input type="text" id="description" th:field="*{description}" class="form-control">
+            <input type="text" id="description" th:errorclass="'is-invalid bg-danger'" th:field="*{description}" class="form-control">
+            <small th:each="error: ${#fields.errors('description')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">description error message</small>
         </div>
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" id="date" th:field="*{date}" class="form-control">
+            <input type="date" id="date" th:errorclass="'is-invalid bg-danger'" th:field="*{date}" class="form-control">
+            <small th:each="error: ${#fields.errors('date')}"
+                   th:text="${error}"
+                   class="invalid-feedback text-danger"
+                   style="font-size: 15px">date error message</small>
         </div>
         <div class="form-group">
             <label for="startTime">Start Time:</label>

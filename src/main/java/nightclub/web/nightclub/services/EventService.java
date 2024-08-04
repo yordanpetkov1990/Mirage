@@ -2,6 +2,7 @@ package nightclub.web.nightclub.services;
 
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.dtos.AddEventDTO;
+import nightclub.web.nightclub.entities.dtos.EditEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 
@@ -22,11 +23,13 @@ public interface EventService {
 
     Optional<Event> getEventById(Long eventId);
 
-    void save(EventDetailsDTO eventDTO);
+    void save(EditEventDTO eventDTO);
 
     void deleteById(Long id);
 
     void removeAllOlderThan2Months();
 
     List<EventDTO> getAllFutureEvents();
+
+    EditEventDTO findEventByIdToEdit(Long id);
 }
