@@ -17,6 +17,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,9 +56,18 @@ public class EventControllerIT {
 
     @Test
     void testDoAddEventSuccess() throws Exception {
-        AddEventDTO addEventDTO = new AddEventDTO(); // Populate with valid data
+        AddEventDTO addEventDTO = new AddEventDTO();
+        addEventDTO.setName("Awesome Event");
+        addEventDTO.setDescription("This is an awesome event you don't want to miss.");
+        addEventDTO.setDate(LocalDate.now().plusDays(1));
+        addEventDTO.setStartTime(LocalTime.of(20, 0));
+        addEventDTO.setEndTime(LocalTime.of(23, 0));
+        addEventDTO.setEntryFee(BigDecimal.valueOf(20.00));
+        addEventDTO.setCapacity(100);
+        addEventDTO.setSingersList(List.of("Singer1", "Singer2"));
+
         mockMvc.perform(post("/admin/add-event")
-                        .flashAttr("eventDTO", addEventDTO))
+                        .flashAttr("addEventDTO", addEventDTO))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }

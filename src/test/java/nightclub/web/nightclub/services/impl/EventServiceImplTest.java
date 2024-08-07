@@ -7,6 +7,7 @@ import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 import nightclub.web.nightclub.entities.dtos.SingerDTO;
 import nightclub.web.nightclub.repository.EventRepository;
 import nightclub.web.nightclub.services.EventService;
+import nightclub.web.nightclub.services.ImageService;
 import nightclub.web.nightclub.services.SingerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,9 @@ public class EventServiceImplTest {
     @Mock
     private SingerService singerService;
 
+    @Mock
+    private ImageService imageService;
+
 
     @Mock
     private ModelMapper modelMapper;
@@ -47,7 +51,7 @@ public class EventServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        eventService = new EventServiceImpl(eventRepository, singerService,modelMapper);
+        eventService = new EventServiceImpl(eventRepository, singerService,modelMapper,imageService);
     }
 
     @Test

@@ -17,12 +17,12 @@ public class ScheduledTasks {
     }
 
 
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void removeReservationsFromTheDB(){
         this.reservationService.removeAllOlderThanNow();
     }
 
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "0 0 0 1 1/2 *")
     public void removeEventsFromTheDatabaseOlderThan2Months(){
         this.eventService.removeAllOlderThan2Months();
     }

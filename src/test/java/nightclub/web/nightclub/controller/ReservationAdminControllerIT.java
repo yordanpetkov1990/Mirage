@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.*;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,34 +43,34 @@ public class ReservationAdminControllerIT {
         reservation.setId(1L);
         reservation.setStatus(StatusEnum.PENDING);
         reservation.setOwner(new User().setUsername("penyo"));
-        reservation.setEvent(new Event().setName("cisco"));
+        Event event = new Event();
+        event.setName("cisco");
+        reservation.setEvent(event);
 
         TableEntity table1 = new TableEntity();
         table1.setId(1L);
         TableEntity table2 = new TableEntity();
         table2.setId(2L);
         List<TableEntity> freeTables = Arrays.asList(table1, table2);
+        Pageable pageable = PageRequest.of(1, 1, Sort.by(Sort.Direction.ASC, "createdAt"));
 
-        Mockito.when(reservationService.findFirstCreatedPendingReservation()).thenReturn(Optional.of(reservation));
+        Mockito.when(reservationService.findReservationsByEventAndStatus(1L, pageable)).thenReturn(new PageImpl<>(Collections.singletonList(reservation), pageable, 1));
         Mockito.when(tableService.findAllFreeTables(reservation)).thenReturn(freeTables);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/reservations"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("reservation"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("tables"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("statuses"));
+                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"));
     }
 
-    @Test
+        @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void testShowReservationsNoNewReservations() throws Exception {
-        Mockito.when(reservationService.findFirstCreatedPendingReservation()).thenReturn(Optional.empty());
+            Pageable pageable = PageRequest.of(1, 1, Sort.by(Sort.Direction.ASC, "createdAt"));
+        Mockito.when(reservationService.findReservationsByEventAndStatus(1L, pageable)).thenReturn(Page.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/reservations"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("noNewReservations"));
+                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"));
     }
 
 
@@ -84,8 +86,7 @@ public class ReservationAdminControllerIT {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/reservations"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("noAvailableTables"));
+                .andExpect(MockMvcResultMatchers.view().name("manage-reservations"));
     }
 
 

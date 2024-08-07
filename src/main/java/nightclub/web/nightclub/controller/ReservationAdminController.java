@@ -56,6 +56,7 @@ public class ReservationAdminController {
                 if(!tables.isEmpty()){
                     model.addAttribute("reservation", reservationPage.getContent().get(0));
                     model.addAttribute("eventName", reservationPage.getContent().get(0).getEvent().getName());
+                    model.addAttribute("eventDate", reservationPage.getContent().get(0).getEvent().getDate());
                     model.addAttribute("eventId", eventId);
                     model.addAttribute("tables", tables);
                     model.addAttribute("statuses", StatusEnum.values());

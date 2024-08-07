@@ -66,8 +66,8 @@ public class JobControllerIT {
     public void testAddJob() throws Exception {
         mockMvc.perform(post("/admin/add-job")
                         .param("title", "test")
-                        .param("description", "test test")
-                        .param("requirements", "test test test")
+                        .param("description", "test test test test test test test test test test test test test test test testtest test test test")
+                        .param("requirements", "test test test test test test test test test test test")
                         .with(csrf())
                 ).andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/careers"));

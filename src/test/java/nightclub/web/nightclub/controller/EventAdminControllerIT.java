@@ -2,6 +2,7 @@ package nightclub.web.nightclub.controller;
 
 import nightclub.web.nightclub.entities.Event;
 import nightclub.web.nightclub.entities.Image;
+import nightclub.web.nightclub.entities.dtos.EditEventDTO;
 import nightclub.web.nightclub.entities.dtos.EventDetailsDTO;
 import nightclub.web.nightclub.services.EventService;
 import nightclub.web.nightclub.services.ImageService;
@@ -49,29 +50,30 @@ public class EventAdminControllerIT {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void testEditEventGet() throws Exception {
-        EventDetailsDTO eventDetailsDTO = new EventDetailsDTO();
-        eventDetailsDTO.setId(1L);
-        eventDetailsDTO.setName("Test Event");
+        EditEventDTO editEventDTO = new EditEventDTO();
+        editEventDTO.setId(1L);
+        editEventDTO.setName("Test Event");
 
-        Mockito.when(eventService.findEventById(1L)).thenReturn(Optional.of(eventDetailsDTO));
+        Mockito.when(eventService.findEventByIdToEdit(1L)).thenReturn(editEventDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/events/edit/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("events-edit"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("event"));
+                .andExpect(MockMvcResultMatchers.model().attributeExists("EditEventDTO"));
     }
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void testEditEventPost() throws Exception {
-        EventDetailsDTO eventDetailsDTO = new EventDetailsDTO();
-        eventDetailsDTO.setId(1L);
-        eventDetailsDTO.setName("Updated Event");
+        EditEventDTO editEventDTO = new EditEventDTO();
+        editEventDTO.setId(1L);
+        editEventDTO.setName("Updated Event");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/admin/events/edit/1")
+        mockMvc.perform(MockMvcRequestBuilders.post("/admin/events/edit")
+                        .param("id", "1")
                         .param("name", "Updated Event")
-                        .param("description", "Updated Description")
-                        .param("date", "2024-01-01")
+                        .param("description", "Updated Descriptionnnnnnnnnnnnnnnnnnnnnn")
+                        .param("date", "2026-01-01")
                         .param("startTime", "12:00")
                         .param("endTime", "15:00")
                         .param("entryFee", "20.00")
@@ -80,7 +82,7 @@ public class EventAdminControllerIT {
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/admin/events"));
 
-        Mockito.verify(eventService, Mockito.times(1)).save(Mockito.any(EventDetailsDTO.class));
+        Mockito.verify(eventService, Mockito.times(1)).save(Mockito.any(EditEventDTO.class));
     }
 
     @Test
