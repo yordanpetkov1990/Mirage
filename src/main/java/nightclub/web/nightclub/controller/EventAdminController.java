@@ -98,7 +98,7 @@ public class EventAdminController {
 
     private String saveImageToFileSystem(MultipartFile file,Event event) {
         String fileName = file.getOriginalFilename();
-        String uploadDir = "C:\\Users\\qnida\\Desktop\\NightClub\\src\\main\\resources\\static\\images\\" + event.getName()+ "-" + event.getId() +"\\";
+        String uploadDir = "C:\\Users\\qnida\\Desktop\\NightClub\\images\\" + event.getName()+ "-" + event.getId() +"\\";
 
         File uploadDirectory = new File(uploadDir);
         if (!uploadDirectory.exists()) {
@@ -110,7 +110,7 @@ public class EventAdminController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "/images/" + event.getName()+ "-" + event.getId() +"\\" + fileName;
+        return "/images/" + event.getName()+ "-" + event.getId() +"/" + fileName;
     }
 
 

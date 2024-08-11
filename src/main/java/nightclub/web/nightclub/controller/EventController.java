@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -67,9 +68,11 @@ public class EventController {
 
         List<EventDTO> upcomingEvents = allEvents.stream()
                 .filter(event -> LocalDate.parse(event.getEventDate()).isAfter(today) || LocalDate.parse(event.getEventDate()).isEqual(today))
+                .sorted(Comparator.comparing(event -> LocalDate.parse(event.getEventDate())))
                 .toList();
         List<EventDTO> pastEvents = allEvents.stream()
                 .filter(event -> LocalDate.parse(event.getEventDate()).isBefore(today))
+                .sorted(Comparator.comparing(event -> LocalDate.parse(event.getEventDate())))
                 .toList();
 
         model.addAttribute("upcomingEvents", upcomingEvents);

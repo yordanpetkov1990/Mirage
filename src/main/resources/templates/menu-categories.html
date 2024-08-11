@@ -8,7 +8,12 @@
 </head>
 <body>
 <div th:replace="fragments/header">...</div>
-
+<div th:if="${message}" class="alert alert-success">
+    <span th:text="${message}"></span>
+</div>
+<div th:if="${error}" class="alert alert-danger">
+    <span th:text="${error}"></span>
+</div>
 <div class="container mt-5">
     <h2 class="text-center">Menu Categories</h2>
     <div class="list-group">

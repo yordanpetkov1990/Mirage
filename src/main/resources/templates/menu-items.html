@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Menu Items - Nightclub</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -40,9 +40,13 @@
     <h2 class="text-center">Menu Items - <span th:text="${category}"></span></h2>
     <div class="list-group"   th:classappend="|category-${category.toLowerCase()}|">
         <div   th:each="menuItem : ${menuItems}" class="list-group-item" >
-<!--            <h5 th:text="${menuItem.name}">Menu Item Name</h5> TODO-->
+            <h5 style="color: green;font-size: 50px;" th:text="${menuItem.name}">Menu Item Name</h5>
             <p>Price: <span th:text="${menuItem.price}">$0.00</span></p>
             <p>Volume: <span th:text="${menuItem.volume}">Volume</span></p>
+            <form sec:authorize="hasRole('ADMIN')" th:action="@{/admin/menu/delete/{id}(id=${menuItem.id})}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="delete-button">DELETE</button>
+            </form>
         </div>
     </div>
 </div>

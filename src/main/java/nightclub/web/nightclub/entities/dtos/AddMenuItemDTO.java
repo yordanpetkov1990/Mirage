@@ -6,6 +6,7 @@ import nightclub.web.nightclub.entities.MenuItemCategory;
 import java.math.BigDecimal;
 
 public class AddMenuItemDTO {
+    private String name;
     private BigDecimal price;
     private MenuItemCategory menuItemCategory;
     private String volume;
@@ -38,6 +39,15 @@ public class AddMenuItemDTO {
 
     public AddMenuItemDTO setVolume(String volume) {
         this.volume = volume;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public AddMenuItemDTO setName(String name) {
+        this.name = name;
         return this;
     }
 }

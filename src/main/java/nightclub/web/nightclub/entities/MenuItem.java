@@ -12,6 +12,8 @@ public class MenuItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private BigDecimal price;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -53,5 +55,14 @@ public class MenuItem {
 
     public void setVolume(String volume) {
         this.volume = volume;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public MenuItem setName(String name) {
+        this.name = name;
+        return this;
     }
 }
